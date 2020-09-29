@@ -5,7 +5,8 @@ SUDO := $(shell docker version >/dev/null 2>&1 || echo "sudo")
 TAG ?= stellar/stellar-etl:$(shell git rev-parse --short HEAD)$(and $(shell git status -s),-dirty-$(shell id -u -n))
 
 docker-build:
-	$(SUDO) docker build -t $(TAG) .
+	$(SUDO) docker build -t $(TAG) -t stellar/stellar-etl:latest .
 
 docker-push:
 	$(SUDO) docker push $(TAG)
+	$(SUOD) docker push stellar/stellar-etl:latest
