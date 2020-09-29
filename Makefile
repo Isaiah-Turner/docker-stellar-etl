@@ -1,12 +1,12 @@
 # Check if we need to prepend docker commands with sudo
 SUDO := $(shell docker version >/dev/null 2>&1 || echo "sudo")
 
-# If TAG is not provided set default value
-TAG ?= stellar/stellar-etl:$(shell git rev-parse --short HEAD)$(and $(shell git status -s),-dirty-$(shell id -u -n))
+
+ETLHASH= stellar/stellar-etl:$(shell git ls-remote https://github.com/stellar/stellar-etl HEAD      )
 
 docker-build:
-	$(SUDO) docker build -t $(TAG) -t stellar/stellar-etl:latest .
+	$(SUDO) docker build -t $(ETLHASH) -t stellar/stellar-etl:latest .
 
 docker-push:
-	$(SUDO) docker push $(TAG)
+	$(SUDO) docker push $(ETLHASH)
 	$(SUOD) docker push stellar/stellar-etl:latest
