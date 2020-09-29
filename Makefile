@@ -2,7 +2,7 @@
 SUDO := $(shell docker version >/dev/null 2>&1 || echo "sudo")
 
 
-ETLHASH= stellar/stellar-etl:$(shell git ls-remote https://github.com/stellar/stellar-etl HEAD      )
+ETLHASH= stellar/stellar-etl:$(shell git ls-remote https://github.com/stellar/stellar-etl HEAD | awk '{print $1;}')
 
 docker-build:
 	$(SUDO) docker build -t $(ETLHASH) -t stellar/stellar-etl:latest .
